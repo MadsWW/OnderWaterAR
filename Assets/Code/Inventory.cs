@@ -18,4 +18,9 @@ public class Inventory
         itemList.Remove(item);
     }
 
+    public void ClearItemList()
+    {
+        itemList.RemoveRange(0, itemList.Count);
+    }
+
 }
