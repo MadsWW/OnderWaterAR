@@ -9,6 +9,8 @@ public class Item : MonoBehaviour
     private string itemDescrip;
     private int itemIndex;
 
+    private UIController uiControl;
+
     public string ItemDescrip
     {
         get
@@ -24,22 +26,22 @@ public class Item : MonoBehaviour
         itemIndex = indexNr;
     }
 
-
-
-    private void OnMouseOver()
+    private void Start()
     {
-        //When mouse hovers over item
+        itemDescrip = "Test UI";
+        uiControl = GameObject.FindObjectOfType<UIController>();
+    }
+
+    private void OnMouseUp()
+    {
+        //Added to Inventory or open UI button to take item.
+        Debug.Log("Item Clicked" + name);
+        uiControl.OpenDescriptionUI(itemDescrip);
     }
 
     private void OnMouseDrag()
     {
         //When dragging the item
+        Debug.Log("Dragging Item" + name);
     }
-
-    private void OnCollissionEnter()
-    {
-        //When collides with certain CollissionBoxes
-    }
-
-
 }

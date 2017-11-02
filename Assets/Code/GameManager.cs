@@ -9,10 +9,6 @@ public class GameManager : MonoBehaviour {
 
     private static GameManager gameManager;
 
-    private CountDown cd;
-
-    public int cdTime;
-
     void OnAwake()
     {
         CheckForGameManager();
@@ -39,7 +35,7 @@ public class GameManager : MonoBehaviour {
 
     private void CreatePlayer()
     {
-        Player player = new Player();
+        Player player = new Player("Mads");
         Debug.Log("Score: " + player.Score);
         player.AddScore(10);
         Debug.Log("Score: " + player.Score);
