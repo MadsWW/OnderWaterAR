@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemIndexNr: 0
+  itemDescrip: Sphere
 --- !u!114 &114475275172130950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -269,6 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemIndexNr: 0
+  itemDescrip: Cube
 --- !u!114 &114707082315264966
 MonoBehaviour:
   m_ObjectHideFlags: 1

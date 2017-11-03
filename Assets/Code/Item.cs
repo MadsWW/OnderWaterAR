@@ -8,7 +8,7 @@ public class Item : MonoBehaviour
     public int ItemIndexNr;
 
     private Image imageItem;
-    private string itemDescrip;
+    public string itemDescrip;
     private int itemIndex;
 
     private UIController uiControl;
@@ -24,18 +24,14 @@ public class Item : MonoBehaviour
     // Load all necessairy Classes.
     private void Awake()
     {
-        uiControl = GameObject.FindObjectOfType<UIController>();
+        uiControl = FindObjectOfType<UIController>();
     }
 
     //Make Description UI pop up with description of this item.
     private void OnMouseUp()
     {
         uiControl.OpenDescriptionUI(gameObject, itemDescrip);
-        Player.selectedItem = this;
-    }
-
-    public void DestroyItem()
-    {
-        Destroy(gameObject);
+        ButtonController.selectedItem = this;
+        Debug.Log(this.name);
     }
 }

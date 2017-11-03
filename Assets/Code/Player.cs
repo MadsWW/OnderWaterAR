@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour  {
-
-    public static Item selectedItem;
+public class Player
+{
 
     private int score;
     private string name;
@@ -33,22 +32,25 @@ public class Player : MonoBehaviour  {
         }
     }
 
+    //Add points to score of player
     public void AddScore(int points)
     {
         score += points;
     }
 
-    public void AddItemToInventory()
+    //Adds Item to players inventory
+    public void AddItemToInventory(Item item)
     {
-        inventory.Add(selectedItem);
-        selectedItem.DestroyItem();
+        inventory.Add(item);
     }
 
+    //Takes away item from players inventory
     public void RemoveItemFromInventory(Item item)
     {
         inventory.Remove(item);
     }
 
+    //Empties player entire inventory
     public void EmptyInventory()
     {
         inventory.RemoveRange(0, inventory.Count);

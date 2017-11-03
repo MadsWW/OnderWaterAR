@@ -13,9 +13,10 @@ public class GameManager : MonoBehaviour {
 
 
 
-    private void OnAwake()
+    private void Awake()
     {
         CheckForGameManager();
+        CreatePlayer("Mads");
     }
 
     private void CheckForGameManager()
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour {
         if (player == null)
         {
             player = new Player(name);
+            Debug.Log("New player named: " + name);
         } else if (player != null)
         {
             Debug.Log("A player already exists, called: " + player.Name );
