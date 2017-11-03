@@ -8,8 +8,12 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     private static GameManager gameManager;
+    
+    public static Player player;
 
-    void OnAwake()
+
+
+    private void OnAwake()
     {
         CheckForGameManager();
     }
@@ -27,17 +31,16 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
-    void Start ()
-    {
-        CreatePlayer();
-    }
 
-    private void CreatePlayer()
+    //!!Make CheckForPlayer later, if there is non, let the player create one.!!
+    private void CreatePlayer(string name)
     {
-        Player player = new Player("Mads");
-        Debug.Log("Score: " + player.Score);
-        player.AddScore(10);
-        Debug.Log("Score: " + player.Score);
+        if (player == null)
+        {
+            player = new Player(name);
+        } else if (player != null)
+        {
+            Debug.Log("A player already exists, called: " + player.Name );
+        }
     }
 }

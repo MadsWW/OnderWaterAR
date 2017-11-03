@@ -5,43 +5,37 @@ using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
+    public int ItemIndexNr;
+
     private Image imageItem;
     private string itemDescrip;
     private int itemIndex;
 
     private UIController uiControl;
 
-    public string ItemDescrip
-    {
-        get
-        {
-            return itemDescrip;
-        }
-    }
-
-    public Item(Image img, string descrip, int indexNr)
+    //Set Fields For All Items in the scene from another script.
+    public void SetFields(Image img, string descrip, int indexNr)
     {
         imageItem = img;
         itemDescrip = descrip;
         itemIndex = indexNr;
     }
 
-    private void Start()
+    // Load all necessairy Classes.
+    private void Awake()
     {
-        itemDescrip = "Test UI";
         uiControl = GameObject.FindObjectOfType<UIController>();
     }
 
+    //Make Description UI pop up with description of this item.
     private void OnMouseUp()
     {
-        //Added to Inventory or open UI button to take item.
-        Debug.Log("Item Clicked" + name);
-        uiControl.OpenDescriptionUI(itemDescrip);
+        uiControl.OpenDescriptionUI(gameObject, itemDescrip);
+        Player.selectedItem = this;
     }
 
-    private void OnMouseDrag()
+    public void DestroyItem()
     {
-        //When dragging the item
-        Debug.Log("Dragging Item" + name);
+        Destroy(gameObject);
     }
 }

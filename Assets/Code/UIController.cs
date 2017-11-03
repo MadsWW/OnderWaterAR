@@ -5,33 +5,50 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour {
 
-    public Animator animDescripUI;
-    public Text textDescripUI;
+    public Animator AnimDescripUI;
+    public GameObject Panel;
+    public Text TextDescripUI;
+    public Button TakeItemButton;
 
     public void Start()
     {
-        textDescripUI = GetComponentInChildren<Text>();
+        Panel.SetActive(false);
     }
 
-    public void OpenDescriptionUI(string description)
+    public void OpenDescriptionUI(GameObject obj,string description)
     {
-        animDescripUI.Play("OpenUI");
+        Panel.SetActive(true);
+        AnimDescripUI.Play("OpenUI");
         ChangeDescriptionText(description);
+        TakeItemButton.enabled = EnableTakeButton(obj); 
     }
 
     public void CloseDescriptionUI()
     {
-        animDescripUI.Play("CloseUI");
+        AnimDescripUI.Play("CloseUI");
         Invoke("ClearDescriptionText", 2);
     }
 
+    private bool EnableTakeButton(GameObject obj)
+    {
+        if (obj.GetComponent<Item>())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     private void ChangeDescriptionText(string description)
     {
-        textDescripUI.text = description;
+        TextDescripUI.text = description;
     }
 
     private void ClearDescriptionText()
     {
-        textDescripUI.text = string.Empty;
+        TextDescripUI.text = string.Empty;
+        Panel.SetActive(false);
     }
 }
