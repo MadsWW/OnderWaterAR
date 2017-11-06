@@ -27,8 +27,16 @@ public class Item : MonoBehaviour
         uiControl = FindObjectOfType<UIController>();
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonUp(0))
+        {
+            ClickedOnItem();
+        }
+    }
+
     //Make Description UI pop up with description of this item.
-    private void OnMouseUp()
+    private void ClickedOnItem()
     {
         uiControl.OpenDescriptionUI(gameObject, itemDescrip);
         ButtonController.selectedItem = this;
