@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+//!!Can be merged with UIController later on.
 public class ButtonController : MonoBehaviour {
 
     public static Item selectedItem;
