@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour {
 
     public Camera cam;
 
+    private bool isClicked = false;
+
+    RaycastHit hit;
 
 
     private void Awake()
@@ -37,7 +40,6 @@ public class GameManager : MonoBehaviour {
     {
         if (Input.GetMouseButtonUp(0))
         {
-            RaycastHit hit;
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))

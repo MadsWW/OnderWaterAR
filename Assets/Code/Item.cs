@@ -18,5 +18,4 @@ public class Item : MonoBehaviour
         itemDescrip = descrip;
         itemIndex = indexNr;
     }
-
 }
