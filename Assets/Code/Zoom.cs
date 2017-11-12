@@ -34,7 +34,7 @@ public class Zoom : MonoBehaviour {
 
         if (Input.GetMouseButton(1))
         {
-            float clickChangePos = Input.mouse
+            //float clickChangePos = Input.mouse
         }
     }
 }

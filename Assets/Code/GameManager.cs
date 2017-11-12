@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 
     public Camera cam;
 
-    private bool isClicked = false;
+    //private bool isClicked = false;
 
     RaycastHit hit;
 
