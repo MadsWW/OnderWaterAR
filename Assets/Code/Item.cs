@@ -6,16 +6,16 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour
 {
     public int ItemIndexNr;
+    public string ItemDescrip;
 
-    private Image imageItem;
-    public string itemDescrip;
-    private int itemIndex;
+    //private Image imageItem; -- ReAdd if needed.
+
 
     //Set Fields For All Items in the scene from another script.
     public void SetFields(Image img, string descrip, int indexNr)
     {
-        imageItem = img;
-        itemDescrip = descrip;
-        itemIndex = indexNr;
+        //imageItem = img;
+        ItemDescrip = descrip;
+        ItemIndexNr = indexNr;
     }
 }

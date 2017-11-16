@@ -8,14 +8,16 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
     private static GameManager gameManager;
-       
+
+    public static GameObject selectedItem;
     public static Player player;
 
     private UIController uiControl;
 
     public Camera cam;
 
-    //private bool isClicked = false;
+    public Shader normalShader;
+    public Shader outlineShader;
 
     RaycastHit hit;
 
@@ -23,7 +25,6 @@ public class GameManager : MonoBehaviour {
     private void Awake()
     {
         CheckForGameManager();
-        CreatePlayer("Mads");
     }
 
     private void Start()
@@ -47,18 +48,34 @@ public class GameManager : MonoBehaviour {
                 if (hit.collider.GetComponent<Item>())
                 {
                     GameObject item = hit.collider.gameObject;
-                    string itemDescription = hit.collider.gameObject.GetComponent<Item>().itemDescrip;
+                    string itemDescription = hit.collider.gameObject.GetComponent<Item>().ItemDescrip;
                     ClickedOnItem(item, itemDescription);
                 }
             }
         }
     }
 
+    // Make bool functions to check selectedItem.
     private void ClickedOnItem(GameObject obj, string itemDescrip)
     {
         uiControl.OpenDescriptionUI(obj, itemDescrip);
-        ButtonController.selectedItem = obj.GetComponent<Item>();
-        Debug.Log(" SelectItem: " + ButtonController.selectedItem);
+        if (selectedItem == null)
+        {
+            selectedItem = obj;
+        }
+
+        if(selectedItem == obj)
+        {
+            selectedItem.GetComponent<Renderer>().material.shader = outlineShader;
+        }
+
+        if(selectedItem != obj)
+        {
+            selectedItem.GetComponent<Renderer>().material.shader = normalShader;
+            selectedItem = obj;
+            selectedItem.GetComponent<Renderer>().material.shader = outlineShader;
+        }
+        
     }
 
     private void CheckForGameManager()
@@ -74,19 +91,4 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-
-    //!!Make CheckForPlayer later, if there is non, let the player create one.!!
-    private void CreatePlayer(string name)
-    {
-        if (player == null)
-        {
-            player = new Player(name);
-            Debug.Log("New player named: " + name);
-        } else if (player != null)
-        {
-            Debug.Log("A player already exists, called: " + player.Name );
-        }
-    }
-
-    
 }

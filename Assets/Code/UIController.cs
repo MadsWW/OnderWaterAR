@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+// !! Check if there are functions that can be combined. Ex. Open/Close bool function.
 public class UIController : MonoBehaviour {
 
     public Animator AnimDescripUI;

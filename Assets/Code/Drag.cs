@@ -9,11 +9,9 @@ public class Drag : MonoBehaviour {
     Vector3 initialPos;
 
 	// Use this for initialization
-	void Start () {
-
-        Input.simulateMouseWithTouches = enabled;
+	void Start ()
+    {
         initialPos = transform.position;
-		
 	}
 	
 	// Update is called once per frame
