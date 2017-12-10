@@ -1,10 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Zoom : MonoBehaviour {
 
-    public GameObject go;
+    [Header ("Put in ImageTarget GameObject for each level")]
+    public GameObject LevelOne;
+    public GameObject LevelTwo;
+    public GameObject LevelThree;
 
     private float maxFOV = 0.9f;
     private float minFOV = 1.1f;
@@ -12,10 +13,10 @@ public class Zoom : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        ZoomScene();
+        ZoomScene(LevelOne);
     }
 
-    private void ZoomScene()
+    private void ZoomScene(GameObject go)
     {
         if (Input.touchCount > 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {

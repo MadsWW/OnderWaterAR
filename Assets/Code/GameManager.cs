@@ -1,25 +1,31 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour {
 
     private static GameManager gameManager;
 
-    public static GameObject selectedItem;
-    public static Player player;
+    public static Item selectedItem;
+    
+    [Header("Start Highlight After X Seconds")]
+    public int HighlightAfterSec;
 
-    private UIController uiControl;
+    [Header("Highlight Items List Per Level")]
+    public List<Item> LevelOneItems;
+    public List<Item> LevelTwoItems;
+    public List<Item> LevelThreeItems;
 
+    [Header("Do NOT Touch!")]
     public Camera cam;
-
     public Shader normalShader;
     public Shader outlineShader;
 
-    RaycastHit hit;
+    private RaycastHit hit;
+
+    private int randomNumber = 0;
+    private int previousNumber = 0;
 
 
     private void Awake()
@@ -27,57 +33,7 @@ public class GameManager : MonoBehaviour {
         CheckForGameManager();
     }
 
-    private void Start()
-    {
-        uiControl = FindObjectOfType<UIController>();
-    }
-
-    private void Update()
-    {
-        WhatDidIClickOn();
-    }
-
-    private void WhatDidIClickOn()
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider.GetComponent<Item>())
-                {
-                    GameObject item = hit.collider.gameObject;
-                    string itemDescription = hit.collider.gameObject.GetComponent<Item>().ItemDescrip;
-                    ClickedOnItem(item, itemDescription);
-                }
-            }
-        }
-    }
-
-    // Make bool functions to check selectedItem.
-    private void ClickedOnItem(GameObject obj, string itemDescrip)
-    {
-        uiControl.OpenDescriptionUI(obj, itemDescrip);
-        if (selectedItem == null)
-        {
-            selectedItem = obj;
-        }
-
-        if(selectedItem == obj)
-        {
-            selectedItem.GetComponent<Renderer>().material.shader = outlineShader;
-        }
-
-        if(selectedItem != obj)
-        {
-            selectedItem.GetComponent<Renderer>().material.shader = normalShader;
-            selectedItem = obj;
-            selectedItem.GetComponent<Renderer>().material.shader = outlineShader;
-        }
-        
-    }
-
+    // Singleton for GameManager
     private void CheckForGameManager()
     {
         if (gameManager == null)
@@ -89,6 +45,49 @@ public class GameManager : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+    }
+
+
+    private void Start()
+    {
+        InvokeRepeating("HighlightItem", HighlightAfterSec, HighlightAfterSec); 
+    }
+
+
+
+    private void HighlightItem()
+    {
+        if(LevelOneItems == null)
+        {
+            throw new ArgumentNullException("There are no Imporant Items in the Scene");
+        }
+
+        if(selectedItem != null)
+        {
+            selectedItem.GetComponent<Renderer>().material.shader = normalShader;
+        }
+
+        randomNumber = RandomNumber();
+        selectedItem = LevelOneItems[randomNumber];
+        selectedItem.GetComponent<Renderer>().material.shader = outlineShader;
+    }
+
+    private int RandomNumber()
+    {
+        
+        int ranNumber = UnityEngine.Random.Range(0, LevelOneItems.Count);
+
+        if (ranNumber == previousNumber)
+        {
+            return RandomNumber(); 
+        }
+        else if(ranNumber != previousNumber)
+        {
+            previousNumber = ranNumber;
+            return ranNumber;
+        }
+
+        throw new ArgumentException("Returned a value which was not expected");
     }
 
 }
