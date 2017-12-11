@@ -8,26 +8,23 @@ public class GameManager : MonoBehaviour {
     private static GameManager gameManager;
 
     public static Item selectedItem;
-    
-    [Header("Start Highlight After X Seconds")]
-    public int HighlightAfterSec;
 
-    [Header("Highlight Items List Per Level")]
-    public List<Item> LevelOneItems;
-    public List<Item> LevelTwoItems;
-    public List<Item> LevelThreeItems;
+    [Header("Hightlight Options")]
+    public float StartHighlightAfterSec;
+    public float RepeatHighlightAfterSec;
+    public float StopHightlightAfterSec;
 
-    [Header("Do NOT Touch!")]
-    public Camera cam;
+    [Header("Do NOT Touch Unless Empty")]
+    public Camera cam; // Make private and FindObj at awake/Start
     public Shader normalShader;
     public Shader outlineShader;
 
-    private RaycastHit hit;
+    private List<Item> activeLevelItemList = new List<Item>();
 
     private int randomNumber = 0;
     private int previousNumber = 0;
 
-
+    // Handles everything on Awake
     private void Awake()
     {
         CheckForGameManager();
@@ -48,18 +45,12 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    private void Start()
-    {
-        InvokeRepeating("HighlightItem", HighlightAfterSec, HighlightAfterSec); 
-    }
-
-
-
+    // Set normal Shader to previous selectedItem and hightlightss the new one.
     private void HighlightItem()
     {
-        if(LevelOneItems == null)
+        if(activeLevelItemList == null)
         {
-            throw new ArgumentNullException("There are no Imporant Items in the Scene");
+            throw new ArgumentNullException("The Hightlightable Item List is Empty.");
         }
 
         if(selectedItem != null)
@@ -68,14 +59,22 @@ public class GameManager : MonoBehaviour {
         }
 
         randomNumber = RandomNumber();
-        selectedItem = LevelOneItems[randomNumber];
+        selectedItem = activeLevelItemList[randomNumber];
         selectedItem.GetComponent<Renderer>().material.shader = outlineShader;
+
+        Invoke("RemoveHighlight", StopHightlightAfterSec);
     }
 
+    private void RemoveHighlight()
+    {
+        selectedItem.GetComponent<Renderer>().material.shader = normalShader;
+    }
+
+    // Calculates random number and checks if last value is not the same.
     private int RandomNumber()
     {
         
-        int ranNumber = UnityEngine.Random.Range(0, LevelOneItems.Count);
+        int ranNumber = UnityEngine.Random.Range(0, activeLevelItemList.Count);
 
         if (ranNumber == previousNumber)
         {
@@ -90,4 +89,24 @@ public class GameManager : MonoBehaviour {
         throw new ArgumentException("Returned a value which was not expected");
     }
 
+    //Sets current active level List and starts highligting
+    public void AddItemsToActiveList(List<Item> items)
+    {
+        foreach(Item item in items)
+        {
+            activeLevelItemList.Add(item);
+        }
+        Debug.Log(activeLevelItemList.Count);
+        InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
+    }
+
+    //Clears the activeitemlist and stops hightlighting
+    public void EmptyActiveItemList()
+    {
+        if (activeLevelItemList != null)
+        {
+            activeLevelItemList.Clear();
+            CancelInvoke("HighlightItem");
+        }
+    }
 }

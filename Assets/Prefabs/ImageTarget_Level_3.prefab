@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114042382182974334}
   - component: {fileID: 23026106811376416}
   - component: {fileID: 33213230505408778}
+  - component: {fileID: 114451845172469428}
   m_Layer: 0
   m_Name: ImageTarget_Level_3
   m_TagString: Untagged
@@ -94,6 +95,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1770992566, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114451845172469428
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169316288336168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 969bc96bb9c662140b337842e8872341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114452920289973394

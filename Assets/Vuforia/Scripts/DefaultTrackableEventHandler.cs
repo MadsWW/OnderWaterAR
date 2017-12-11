@@ -15,6 +15,7 @@ using Vuforia;
 public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
     private UIController uiControl;
+    private HoldLevelItems holdLevelItem;
 
     #region PRIVATE_MEMBER_VARIABLES
 
@@ -27,6 +28,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected virtual void Start()
     {
         uiControl = FindObjectOfType<UIController>();
+        holdLevelItem = GetComponentInChildren<HoldLevelItems>();
 
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         if (mTrackableBehaviour)
@@ -74,6 +76,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected virtual void OnTrackingFound()
     {
         uiControl.CloseScanPanel();
+        holdLevelItem.isActive = true;
+        holdLevelItem.SendItemList();
 
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
@@ -96,6 +100,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected virtual void OnTrackingLost()
     {
         uiControl.OpenScanPanel();
+        holdLevelItem.isActive = false;
+        holdLevelItem.SendItemList();
 
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);

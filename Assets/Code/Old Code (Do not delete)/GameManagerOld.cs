@@ -60,7 +60,7 @@ public class GameManagerOld : MonoBehaviour {
                 if (hit.collider.GetComponent<Item>())
                 {
                     Item item = hit.collider.GetComponent<Item>();
-                    string itemDescription = hit.collider.gameObject.GetComponent<Item>().ItemDescrip;
+                    //string itemDescription = hit.collider.gameObject.GetComponent<Item>().ItemDescrip;
                     ClickedOnItem(item);
                 }
             }

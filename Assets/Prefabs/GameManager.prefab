@@ -51,12 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68567a2d23221f344bfeab85389b0870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HighlightAfterSec: 5
-  importantItems:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  StartHighlightAfterSec: 4
+  RepeatHighlightAfterSec: 4
+  StopHightlightAfterSec: 2
   cam: {fileID: 0}
   normalShader: {fileID: 10703, guid: 0000000000000000f000000000000000, type: 0}
   outlineShader: {fileID: 4800000, guid: 1a71f5d23c267de44a7762c933386e30, type: 3}
+  activeLevelItemList: []
