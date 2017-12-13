@@ -7,12 +7,16 @@ public class HoldLevelItems : MonoBehaviour {
     private List<Item> HighlightableItems = new List<Item>();
 
     private GameManager gManager;
+    private Zoom zoom;
+
+
     [HideInInspector]
     public bool isActive = false;
 
     private void Start ()
     {
         gManager = FindObjectOfType<GameManager>();
+        zoom = FindObjectOfType<Zoom>();
         AddItemToList();
     }
 
@@ -31,10 +35,13 @@ public class HoldLevelItems : MonoBehaviour {
         if (isActive)
         {
             gManager.AddItemsToActiveList(HighlightableItems);
+            zoom.SetActiveLevel(gameObject);
+
         }
         else if (!isActive)
         {
             gManager.EmptyActiveItemList();
+            zoom.EmpyActiveLevel();
         }
     }
 }

@@ -1,30 +1,51 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Zoom : MonoBehaviour {
 
-    [Header ("Put in ImageTarget GameObject for each level")]
-    public GameObject LevelOne;
-    public GameObject LevelTwo;
-    public GameObject LevelThree;
+    public Text TargetScaleText;
 
-    private float maxFOV = 0.9f;
-    private float minFOV = 1.1f;
+    private GameObject activeLevel;
 
-	// Update is called once per frame
-	void Update ()
+    private float minFOV = 1f;
+    private float maxFOV = 2f;
+    private float zoomIntensity = 0.01f;
+
+    float clampedScale = 1;
+
+    // Update is called once per frame
+    void Update ()
     {
-        ZoomScene(LevelOne);
+        ZoomScene(activeLevel);
     }
 
     private void ZoomScene(GameObject go)
     {
-        if (Input.touchCount > 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
+        if (go != null)
         {
-            float touchPosChange = Input.GetTouch(0).deltaPosition.x;
-            float changeScale = go.transform.localScale.x - touchPosChange;
-            float clampedScale = Mathf.Clamp(changeScale, minFOV, maxFOV);
+            // Tells clampedScale and actual scale of Level object.
+            string scaleText = string.Format("Clampscale: {0}  TargetScale: {1}", clampedScale, go.transform.localScale);
+            TargetScaleText.text = scaleText;
 
-            go.transform.localScale = new Vector3(clampedScale, clampedScale, clampedScale);
+            if (Input.touchCount > 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                float touchPosChange = Input.GetTouch(0).deltaPosition.x;
+                float changeScale = go.transform.localScale.x - (touchPosChange * zoomIntensity);
+                clampedScale = Mathf.Clamp(changeScale, minFOV, maxFOV);
+
+                go.transform.localScale = new Vector3(clampedScale, clampedScale, clampedScale);
+            }
         }
+    }
+
+    public void SetActiveLevel(GameObject go)
+    {
+        activeLevel = go;
+    }
+
+    public void EmpyActiveLevel()
+    {
+        activeLevel = null;
     }
 }

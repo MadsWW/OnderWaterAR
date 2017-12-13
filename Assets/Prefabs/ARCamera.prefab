@@ -105,7 +105,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1192454122559758}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f104fd510145e8544a82784786f086c6, type: 3}
   m_Name: 
@@ -113,6 +113,7 @@ MonoBehaviour:
   LevelOne: {fileID: 0}
   LevelTwo: {fileID: 0}
   LevelThree: {fileID: 0}
+  TargetScaleText: {fileID: 0}
 --- !u!114 &114964177598166060
 MonoBehaviour:
   m_ObjectHideFlags: 1
