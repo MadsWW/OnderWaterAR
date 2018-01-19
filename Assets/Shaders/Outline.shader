@@ -3,8 +3,8 @@
 Shader "Custom/Outline" {
 	Properties{
 		_MainTex("MainTex", 2D) = "white" {}
-	_Outline("_Outline", Range(0,2)) = 0
-		_OutlineColor("Color", Color) = (1, 1, 1, 1)
+	_Outline("_Outline", Range(0,2)) = 0.03
+		_OutlineColor("Color", Color) = (255, 120, 0, 0)
 	}
 		SubShader{
 		Pass{

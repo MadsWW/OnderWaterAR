@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Zoom : MonoBehaviour {
 
-    public Text TargetScaleText;
+    //public Text TargetScaleText;
 
     private GameObject activeLevel;
 
@@ -25,8 +25,8 @@ public class Zoom : MonoBehaviour {
         if (go != null)
         {
             // Tells clampedScale and actual scale of Level object.
-            string scaleText = string.Format("Clampscale: {0}  TargetScale: {1}", clampedScale, go.transform.localScale);
-            TargetScaleText.text = scaleText;
+            //string scaleText = string.Format("Clampscale: {0}  TargetScale: {1}", clampedScale, go.transform.localScale);
+            //TargetScaleText.text = scaleText;
 
             if (Input.touchCount > 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {
