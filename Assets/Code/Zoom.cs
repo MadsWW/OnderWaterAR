@@ -17,12 +17,12 @@ public class Zoom : MonoBehaviour {
     // Update is called once per frame
     void Update ()
     {
-        ZoomScene(activeLevel);
+        ZoomScene();
     }
 
-    private void ZoomScene(GameObject go)
+    private void ZoomScene()
     {
-        if (go != null)
+        if (activeLevel != null)
         {
             // Tells clampedScale and actual scale of Level object.
             //string scaleText = string.Format("Clampscale: {0}  TargetScale: {1}", clampedScale, go.transform.localScale);
@@ -31,10 +31,10 @@ public class Zoom : MonoBehaviour {
             if (Input.touchCount > 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {
                 float touchPosChange = Input.GetTouch(0).deltaPosition.x;
-                float changeScale = go.transform.localScale.x - (touchPosChange * zoomIntensity);
+                float changeScale = activeLevel.transform.localScale.x - (touchPosChange * zoomIntensity);
                 clampedScale = Mathf.Clamp(changeScale, minFOV, maxFOV);
 
-                go.transform.localScale = new Vector3(clampedScale, clampedScale, clampedScale);
+                activeLevel.transform.localScale = new Vector3(clampedScale, clampedScale, clampedScale);
             }
         }
     }

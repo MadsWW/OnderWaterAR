@@ -26,8 +26,6 @@ public class HoldLevelItems : MonoBehaviour {
         {
             HighlightableItems.Add(item);
         }
-
-        Debug.Log(HighlightableItems.Count);
     }
 
     public void SendItemList()

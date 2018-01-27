@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour {
         {
             activeLevelItemList.Add(item);
         }
-        Debug.Log(activeLevelItemList.Count);
+
         InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
     }
 
