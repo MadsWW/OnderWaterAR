@@ -5,7 +5,7 @@ Copyright (c) 2010-2014 Qualcomm Connected Experiences, Inc.
 All Rights Reserved.
 Confidential and Proprietary - Protected under copyright and other laws.
 ==============================================================================*/
-
+using System;
 using UnityEngine;
 using Vuforia;
 
@@ -16,6 +16,13 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 {
     private UIController uiControl;
     private HoldLevelItems holdLevelItem;
+
+    public delegate void LevelChanged(GameObject level, bool isActive);
+    public static event LevelChanged OnLevelChange;
+
+    GameObject currentLevel;
+    bool isActive = false;
+   
 
     #region PRIVATE_MEMBER_VARIABLES
 
@@ -29,6 +36,8 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     {
         uiControl = FindObjectOfType<UIController>();
         holdLevelItem = GetComponentInChildren<HoldLevelItems>();
+
+        
 
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         if (mTrackableBehaviour)
@@ -76,8 +85,12 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected virtual void OnTrackingFound()
     {
         uiControl.CloseScanPanel();
-        holdLevelItem.isActive = true;
-        holdLevelItem.SendItemList();
+        //holdLevelItem.isActive = true;
+       // holdLevelItem.SendItemList();
+
+        currentLevel = GetComponent<GameObject>();
+        isActive = true;
+        OnLevelChange(currentLevel, isActive);       
 
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
@@ -100,8 +113,12 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
     protected virtual void OnTrackingLost()
     {
         uiControl.OpenScanPanel();
-        holdLevelItem.isActive = false;
-        holdLevelItem.SendItemList();
+       // holdLevelItem.isActive = false;
+       // holdLevelItem.SendItemList();
+
+        currentLevel = null;
+        isActive = false;
+        OnLevelChange(currentLevel, isActive);
 
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);

@@ -5,30 +5,41 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+
+    #region Private_Variables
     private static GameManager gameManager;
+    private Item selectedItem;
+    private List<Item> activeLevelItemList = new List<Item>();
 
-    public static Item selectedItem;
+    private int randomNumber = 0;
+    private int previousNumber = 0;
+    #endregion
 
+    #region Public_Variables
     [Header("Hightlight Options")]
     public float StartHighlightAfterSec;
     public float RepeatHighlightAfterSec;
     public float StopHightlightAfterSec;
 
     [Header("Do NOT Touch Unless Empty")]
-    public Camera cam; // Make private and FindObj at awake/Start
     public Shader normalShader;
     public Shader outlineShader;
 
-    private List<Item> activeLevelItemList = new List<Item>();
+    
+    #endregion
 
-    private int randomNumber = 0;
-    private int previousNumber = 0;
 
     // Handles everything on Awake
     private void Awake()
     {
         CheckForGameManager();
     }
+
+    private void OnEnable()
+    {
+        DefaultTrackableEventHandler.OnLevelChange += new DefaultTrackableEventHandler.LevelChanged(AddItemsToActiveList);
+    }
+
 
     // Singleton for GameManager
     private void CheckForGameManager()
@@ -43,7 +54,6 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
         }
     }
-
 
     // Set normal Shader to previous selectedItem and hightlightss the new one.
     private void HighlightItem()
@@ -90,23 +100,33 @@ public class GameManager : MonoBehaviour {
     }
 
     //Sets current active level List and starts highligting
-    public void AddItemsToActiveList(List<Item> items)
+    void AddItemsToActiveList(GameObject level, bool isActive)
     {
-        foreach(Item item in items)
+        if (isActive)
         {
-            activeLevelItemList.Add(item);
-        }
+            Item[] tempItemArray = level.GetComponent<HoldLevelItems>().HighlightableItems;
+            foreach (Item item in tempItemArray)
+            {
+                activeLevelItemList.Add(item);
+            }
 
-        InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
+            InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
+            Debug.Log(level.name);
+        }
+        else if (!isActive)
+        {
+            if (activeLevelItemList != null)
+            {
+                activeLevelItemList.Clear();
+                CancelInvoke("HighlightItem");
+            }
+            Debug.Log("Event Didnt do its thing!");
+        }
     }
 
     //Clears the activeitemlist and stops hightlighting
     public void EmptyActiveItemList()
     {
-        if (activeLevelItemList != null)
-        {
-            activeLevelItemList.Clear();
-            CancelInvoke("HighlightItem");
-        }
+
     }
 }

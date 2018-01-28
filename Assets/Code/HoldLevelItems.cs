@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class HoldLevelItems : MonoBehaviour {
 
-    private List<Item> HighlightableItems = new List<Item>();
-
+    public Item[] HighlightableItems;
     private GameManager gManager;
     private Zoom zoom;
 
-
     [HideInInspector]
     public bool isActive = false;
+
+    
 
     private void Start ()
     {
@@ -22,23 +22,20 @@ public class HoldLevelItems : MonoBehaviour {
 
     private void AddItemToList()
     {
-        foreach (Item item in GetComponentsInChildren<Item>())
-        {
-            HighlightableItems.Add(item);
-        }
+        HighlightableItems = GetComponentsInChildren<Item>();
     }
 
     public void SendItemList()
     {
         if (isActive)
         {
-            gManager.AddItemsToActiveList(HighlightableItems);
+            //gManager.AddItemsToActiveList(HighlightableItems);
             zoom.SetActiveLevel(gameObject);
 
         }
         else if (!isActive)
         {
-            gManager.EmptyActiveItemList();
+            //gManager.EmptyActiveItemList();
             zoom.EmpyActiveLevel();
         }
     }

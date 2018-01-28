@@ -1,43 +1,51 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Zoom : MonoBehaviour {
-
-    //public Text TargetScaleText;
 
     private GameObject activeLevel;
 
     private float minFOV = 1f;
     private float maxFOV = 2f;
     private float zoomIntensity = 0.01f;
+    private float clampedScale = 1;
 
-    float clampedScale = 1;
 
+    #region Private_Methods
     // Update is called once per frame
-    void Update ()
+    private void Update ()
     {
         ZoomScene();
     }
 
+    // Checks for touch input every frame, if two or more fingers slide accross the screen you scale the level accordingly.
     private void ZoomScene()
     {
         if (activeLevel != null)
         {
-            // Tells clampedScale and actual scale of Level object.
-            //string scaleText = string.Format("Clampscale: {0}  TargetScale: {1}", clampedScale, go.transform.localScale);
-            //TargetScaleText.text = scaleText;
-
             if (Input.touchCount > 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
             {
-                float touchPosChange = Input.GetTouch(0).deltaPosition.x;
-                float changeScale = activeLevel.transform.localScale.x - (touchPosChange * zoomIntensity);
-                clampedScale = Mathf.Clamp(changeScale, minFOV, maxFOV);
-
-                activeLevel.transform.localScale = new Vector3(clampedScale, clampedScale, clampedScale);
+                CalculateScale();
+                SetTargetScale();
             }
         }
     }
+    
+    // Calculates scale with accordance of the min/max scale/
+    private void CalculateScale()
+    {
+        float touchPosChange = Input.GetTouch(0).deltaPosition.x;
+        float changeScale = activeLevel.transform.localScale.x - (touchPosChange * zoomIntensity);
+        clampedScale = Mathf.Clamp(changeScale, minFOV, maxFOV);
+    }
+
+    // Sets the scale of the active level.
+    private void SetTargetScale()
+    {
+        Vector3 newScale = new Vector3(clampedScale, clampedScale, clampedScale);
+        activeLevel.transform.localScale = newScale;
+    }
+    #endregion
 
     public void SetActiveLevel(GameObject go)
     {
