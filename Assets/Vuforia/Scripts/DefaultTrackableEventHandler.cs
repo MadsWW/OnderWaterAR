@@ -14,17 +14,13 @@ using Vuforia;
 /// </summary>
 public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
-    private UIController uiControl;
-    private HoldLevelItems holdLevelItem;
-
     public delegate void LevelChanged(GameObject level, bool isActive);
     public static event LevelChanged OnLevelChange;
 
-    GameObject currentLevel;
-    bool isActive = false;
-   
-
     #region PRIVATE_MEMBER_VARIABLES
+
+    private GameObject currentLevel;
+    private bool isActive = false;
 
     protected TrackableBehaviour mTrackableBehaviour;
 
@@ -34,11 +30,6 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
     protected virtual void Start()
     {
-        uiControl = FindObjectOfType<UIController>();
-        holdLevelItem = GetComponentInChildren<HoldLevelItems>();
-
-        
-
         mTrackableBehaviour = GetComponent<TrackableBehaviour>();
         if (mTrackableBehaviour)
             mTrackableBehaviour.RegisterTrackableEventHandler(this);
@@ -84,13 +75,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
     protected virtual void OnTrackingFound()
     {
-        uiControl.CloseScanPanel();
-        //holdLevelItem.isActive = true;
-       // holdLevelItem.SendItemList();
-
-        currentLevel = GetComponent<GameObject>();
-        isActive = true;
-        OnLevelChange(currentLevel, isActive);       
+        ActiveLevel();
 
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
@@ -109,16 +94,16 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             component.enabled = true;
     }
 
+    private void ActiveLevel()
+    {
+        currentLevel = gameObject;
+        isActive = true;
+        OnLevelChange(currentLevel, isActive);
+    }
 
     protected virtual void OnTrackingLost()
     {
-        uiControl.OpenScanPanel();
-       // holdLevelItem.isActive = false;
-       // holdLevelItem.SendItemList();
-
-        currentLevel = null;
-        isActive = false;
-        OnLevelChange(currentLevel, isActive);
+        InActiveLevel();
 
         var rendererComponents = GetComponentsInChildren<Renderer>(true);
         var colliderComponents = GetComponentsInChildren<Collider>(true);
@@ -135,6 +120,13 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         // Disable canvas':
         foreach (var component in canvasComponents)
             component.enabled = false;
+    }
+
+    private void InActiveLevel()
+    {
+        currentLevel = null;
+        isActive = false;
+        OnLevelChange(currentLevel, isActive);
     }
 
     #endregion // PRIVATE_METHODS

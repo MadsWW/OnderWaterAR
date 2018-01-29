@@ -8,13 +8,27 @@ public class UIController : MonoBehaviour {
     public GameObject ScanPanel;
 
 
-    public void OpenScanPanel()
+    // Adds methods to OnChangeLevel Event
+    private void Start()
     {
-        ScanPanel.SetActive(true);
+        DefaultTrackableEventHandler.OnLevelChange += new DefaultTrackableEventHandler.LevelChanged(ChangeScanPanel);
     }
 
-    public void CloseScanPanel()
+    private void OnDestroy()
     {
-        ScanPanel.SetActive(false);
+        DefaultTrackableEventHandler.OnLevelChange -= new DefaultTrackableEventHandler.LevelChanged(ChangeScanPanel);
+    }
+
+    // (De)Activetes scanpanel depending if there is an active level.
+    private void ChangeScanPanel(GameObject activeLevel, bool isActive)
+    {
+        if (isActive)
+        {
+            ScanPanel.SetActive(true);
+        }
+        else if (!isActive)
+        {
+            ScanPanel.SetActive(false);
+        }
     }
 }

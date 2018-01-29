@@ -7,15 +7,18 @@ public class GameManager : MonoBehaviour {
 
 
     #region Private_Variables
+
     private static GameManager gameManager;
     private Item selectedItem;
     private List<Item> activeLevelItemList = new List<Item>();
 
     private int randomNumber = 0;
     private int previousNumber = 0;
-    #endregion
+
+    #endregion // Private_Variables
 
     #region Public_Variables
+
     [Header("Hightlight Options")]
     public float StartHighlightAfterSec;
     public float RepeatHighlightAfterSec;
@@ -25,21 +28,21 @@ public class GameManager : MonoBehaviour {
     public Shader normalShader;
     public Shader outlineShader;
 
-    
-    #endregion
+    #endregion // Public_Variables
 
 
-    // Handles everything on Awake
+    // Handles everything on Awake + Add method to levelchangeevent
     private void Awake()
     {
         CheckForGameManager();
+        DefaultTrackableEventHandler.OnLevelChange += new DefaultTrackableEventHandler.LevelChanged(ChangeItemsToActiveList);
     }
 
-    private void OnEnable()
+    // Removes method from levelchangeevent.
+    private void OnDestroy()
     {
-        DefaultTrackableEventHandler.OnLevelChange += new DefaultTrackableEventHandler.LevelChanged(AddItemsToActiveList);
+        DefaultTrackableEventHandler.OnLevelChange -= new DefaultTrackableEventHandler.LevelChanged(ChangeItemsToActiveList);
     }
-
 
     // Singleton for GameManager
     private void CheckForGameManager()
@@ -52,6 +55,31 @@ public class GameManager : MonoBehaviour {
         else if (gameManager != this)
         {
             Destroy(gameObject);
+        }
+    }
+
+
+    #region HANDLES_HIGHLIGHT_METHODS
+    //Sets current active level List and starts highligting
+    private void ChangeItemsToActiveList(GameObject level, bool isActive)
+    {
+        if (isActive)
+        {
+            Item[] tempItemArray = level.GetComponent<HoldLevelItems>().HighlightableItems;
+            foreach (Item item in tempItemArray)
+            {
+                activeLevelItemList.Add(item);
+            }
+
+            InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
+        }
+        else if (!isActive)
+        {
+            if (activeLevelItemList != null)
+            {
+                activeLevelItemList.Clear();
+                CancelInvoke("HighlightItem");
+            }
         }
     }
 
@@ -75,10 +103,12 @@ public class GameManager : MonoBehaviour {
         Invoke("RemoveHighlight", StopHightlightAfterSec);
     }
 
+    // Removes Highlight after x seconds.
     private void RemoveHighlight()
     {
         selectedItem.GetComponent<Renderer>().material.shader = normalShader;
     }
+    #endregion // HANDLES_HIGHLIGHT_METHODS
 
     // Calculates random number and checks if last value is not the same.
     private int RandomNumber()
@@ -99,34 +129,5 @@ public class GameManager : MonoBehaviour {
         throw new ArgumentException("Returned a value which was not expected");
     }
 
-    //Sets current active level List and starts highligting
-    void AddItemsToActiveList(GameObject level, bool isActive)
-    {
-        if (isActive)
-        {
-            Item[] tempItemArray = level.GetComponent<HoldLevelItems>().HighlightableItems;
-            foreach (Item item in tempItemArray)
-            {
-                activeLevelItemList.Add(item);
-            }
 
-            InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
-            Debug.Log(level.name);
-        }
-        else if (!isActive)
-        {
-            if (activeLevelItemList != null)
-            {
-                activeLevelItemList.Clear();
-                CancelInvoke("HighlightItem");
-            }
-            Debug.Log("Event Didnt do its thing!");
-        }
-    }
-
-    //Clears the activeitemlist and stops hightlighting
-    public void EmptyActiveItemList()
-    {
-
-    }
 }
