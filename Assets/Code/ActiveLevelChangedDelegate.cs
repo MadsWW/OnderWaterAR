@@ -5,6 +5,6 @@ using UnityEngine;
 
 public class ActiveLevelChangedDelegate : MonoBehaviour {
 
-    public delegate void LevelChanged(object sender, EventArgs args);
-    public event LevelChanged OnLevelChange;
+    public delegate void LevelChanged(GameObject activeLevel, bool isActive);
+    public static event LevelChanged OnLevelChange;
 }
