@@ -34,11 +34,14 @@ public sealed class Item : MonoBehaviour, IComparable<Item>, IEquatable<Item>
 
     public bool Equals(Item other)
     {
-        if(other == null)
+        if (other == null)
         {
             return false;
         }
-        return this.ItemIndexNr == other.ItemIndexNr;
+        else
+        {
+            return this.ItemIndexNr == other.ItemIndexNr;
+        }
     }
 
     public static bool operator == (Item x, Item y)
@@ -65,7 +68,7 @@ public sealed class Item : MonoBehaviour, IComparable<Item>, IEquatable<Item>
 
     public override int GetHashCode()
     {
-        return base.GetHashCode();
+        return ItemIndexNr.GetHashCode();
     }
 
     #endregion // EQUALS_COMP_METHODS

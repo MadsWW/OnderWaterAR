@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void LevelChangeDelegate(object sender, LevelChangeEventArgs args);
+//public delegate void LevelChangeDelegate(object sender, LevelChangeEventArgs args);
 
 
 

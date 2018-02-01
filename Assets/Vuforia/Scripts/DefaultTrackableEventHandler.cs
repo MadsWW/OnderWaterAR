@@ -14,6 +14,7 @@ using Vuforia;
 /// </summary>
 public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
+    public delegate void LevelChangeDelegate(object sender, LevelChangeEventArgs args);
     public static event LevelChangeDelegate OnLevelChange;
 
     #region PRIVATE_MEMBER_VARIABLES
