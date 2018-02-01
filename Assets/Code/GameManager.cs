@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour {
             foreach (Item item in tempItemArray)
             {
                 activeLevelItemList.Add(item);
+                Debug.Log("Items from level have been added to ActiveList");
             }
 
             InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
