@@ -43,12 +43,12 @@ public sealed class Item : MonoBehaviour, IComparable<Item>, IEquatable<Item>
 
     public static bool operator == (Item x, Item y)
     {
-        return Equals(x.ItemIndexNr, y.ItemIndexNr);
+        return Equals(x,y);
     }
 
     public static bool operator !=(Item x, Item y)
     {
-        return !Equals(x.ItemIndexNr, y.ItemIndexNr);
+        return !Equals(x,y);
     }
 
     public override bool Equals(object other)
