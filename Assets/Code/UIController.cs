@@ -24,11 +24,11 @@ public class UIController : MonoBehaviour {
     {
         if (args.IsActive)
         {
-            ScanPanel.SetActive(true);
+            ScanPanel.SetActive(false);
         }
         else if (!args.IsActive)
         {
-            ScanPanel.SetActive(false);
+            ScanPanel.SetActive(true);
         }
     }
 }
