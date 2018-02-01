@@ -35,13 +35,13 @@ public class GameManager : MonoBehaviour {
     private void Awake()
     {
         CheckForGameManager();
-        DefaultTrackableEventHandler.OnLevelChange += new DefaultTrackableEventHandler.LevelChanged(ChangeItemsToActiveList);
+        DefaultTrackableEventHandler.OnLevelChange += ChangeItemsToActiveList;
     }
 
     // Removes method from levelchangeevent.
     private void OnDestroy()
     {
-        DefaultTrackableEventHandler.OnLevelChange -= new DefaultTrackableEventHandler.LevelChanged(ChangeItemsToActiveList);
+        DefaultTrackableEventHandler.OnLevelChange -= ChangeItemsToActiveList;
     }
 
     // Singleton for GameManager
@@ -61,11 +61,11 @@ public class GameManager : MonoBehaviour {
 
     #region HANDLES_HIGHLIGHT_METHODS
     //Sets current active level List and starts highligting
-    private void ChangeItemsToActiveList(GameObject level, bool isActive)
+    private void ChangeItemsToActiveList(object sender, LevelChangeEventArgs args)
     {
-        if (isActive)
+        if (args.IsActive)
         {
-            Item[] tempItemArray = level.GetComponent<HoldLevelItems>().HighlightableItems;
+            Item[] tempItemArray = args.ActiveLevel.GetComponent<HoldLevelItems>().HighlightableItems;
             foreach (Item item in tempItemArray)
             {
                 activeLevelItemList.Add(item);
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour {
 
             InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
         }
-        else if (!isActive)
+        else if (!args.IsActive)
         {
             if (activeLevelItemList != null)
             {

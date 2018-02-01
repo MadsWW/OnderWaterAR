@@ -20,13 +20,13 @@ public class Zoom : MonoBehaviour {
     // Adds method to LevelChangeEvent
     private void Start()
     {
-        DefaultTrackableEventHandler.OnLevelChange += new DefaultTrackableEventHandler.LevelChanged(ChangeActiveLevel);
+        DefaultTrackableEventHandler.OnLevelChange += ChangeActiveLevel;
     }
 
     // Removes methods from LevelChangeEvent
     private void OnDestroy()
     {
-        DefaultTrackableEventHandler.OnLevelChange -= new DefaultTrackableEventHandler.LevelChanged(ChangeActiveLevel);
+        DefaultTrackableEventHandler.OnLevelChange -= ChangeActiveLevel;
     }
 
     // Update is called once per frame
@@ -64,13 +64,13 @@ public class Zoom : MonoBehaviour {
     }
     
     //Changes GO to current active ImageTrackerGO
-    private void ChangeActiveLevel(GameObject levelChange, bool isActive)
+    private void ChangeActiveLevel(object sender, LevelChangeEventArgs args)
     {
-        if (isActive)
+        if (args.IsActive)
         {
-            activeLevel = levelChange;
+            activeLevel = args.ActiveLevel;
         }
-        else if (!isActive)
+        else if (!args.IsActive)
         {
             activeLevel = null;
         }

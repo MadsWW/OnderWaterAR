@@ -14,13 +14,9 @@ using Vuforia;
 /// </summary>
 public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandler
 {
-    public delegate void LevelChanged(GameObject level, bool isActive);
-    public static event LevelChanged OnLevelChange;
+    public static event LevelChangeDelegate OnLevelChange;
 
     #region PRIVATE_MEMBER_VARIABLES
-
-    private GameObject currentLevel;
-    private bool isActive = false;
 
     protected TrackableBehaviour mTrackableBehaviour;
 
@@ -96,9 +92,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
     private void ActiveLevel()
     {
-        currentLevel = gameObject;
-        isActive = true;
-        OnLevelChange(currentLevel, isActive);
+        LevelChangeEventArgs args = new LevelChangeEventArgs();
+        args.ActiveLevel = gameObject;
+        args.IsActive = true;
+        OnLevelChange(this, args);
     }
 
     protected virtual void OnTrackingLost()
@@ -124,9 +121,10 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
 
     private void InActiveLevel()
     {
-        currentLevel = null;
-        isActive = false;
-        OnLevelChange(currentLevel, isActive);
+        LevelChangeEventArgs args = new LevelChangeEventArgs();
+        args.ActiveLevel = gameObject;
+        args.IsActive = false;
+        OnLevelChange(this, args);
     }
 
     #endregion // PRIVATE_METHODS
