@@ -310,16 +310,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 33972930522898074, guid: 47f75bd48740cdd4c9088a54af81be35,
-        type: 2}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1312244678}
     - target: {fileID: 23481964013905274, guid: 47f75bd48740cdd4c9088a54af81be35,
         type: 2}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2040538016}
+    - target: {fileID: 33972930522898074, guid: 47f75bd48740cdd4c9088a54af81be35,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1312244678}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 47f75bd48740cdd4c9088a54af81be35, type: 2}
   m_IsPrefabParent: 0
@@ -410,12 +410,12 @@ Prefab:
     - target: {fileID: 224342058054323024, guid: 5cb670bc1cb31ec43b995268b01019e5,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 477.5
+      value: 478
       objectReference: {fileID: 0}
     - target: {fileID: 224342058054323024, guid: 5cb670bc1cb31ec43b995268b01019e5,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 268.5
+      value: 269
       objectReference: {fileID: 0}
     - target: {fileID: 224342058054323024, guid: 5cb670bc1cb31ec43b995268b01019e5,
         type: 2}
@@ -626,6 +626,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 932677500}
+    - target: {fileID: 1386741019164208, guid: 2d9e3750eb4488d4d936d8a4d69558a0, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2d9e3750eb4488d4d936d8a4d69558a0, type: 2}
   m_IsPrefabParent: 0
@@ -1298,7 +1302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969bc96bb9c662140b337842e8872341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActive: 0
+  HighlightableItems: []
 --- !u!33 &2008260917
 MeshFilter:
   m_ObjectHideFlags: 0

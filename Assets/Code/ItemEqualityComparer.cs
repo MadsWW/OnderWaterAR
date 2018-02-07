@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
+using System.Text;
 
-public class ItemEqualityComparer : EqualityComparer<Item>
-{
 
+    class ItemEqualityComparer : EqualityComparer<Item>
+    {
     public override bool Equals(Item x, Item y)
     {
-        return Equals(x, y);
+        return Equals(x.ItemIndexNr, y.ItemIndexNr);
     }
 
     public override int GetHashCode(Item obj)
     {
-        return obj.GetHashCode();
+        return obj.ItemIndexNr.GetHashCode();
     }
 }
+

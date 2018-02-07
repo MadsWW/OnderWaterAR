@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class GameManager : MonoBehaviour {
 
 
@@ -10,10 +9,11 @@ public class GameManager : MonoBehaviour {
 
     private static GameManager gameManager;
     private Item selectedItem;
-    private List<Item> activeLevelItemList = new List<Item>();
+    public List<Item> activeLevelItemList = new List<Item>();
 
     private int randomNumber = 0;
     private int previousNumber = 0;
+    
 
     #endregion // Private_Variables
 
@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour {
     {
         CheckForGameManager();
         DefaultTrackableEventHandler.OnLevelChange += ChangeItemsToActiveList;
+        
     }
 
     // Removes method from levelchangeevent.
@@ -66,11 +67,13 @@ public class GameManager : MonoBehaviour {
         if (args.IsActive)
         {
             Item[] tempItemArray = args.ActiveLevel.GetComponent<HoldLevelItems>().HighlightableItems;
+
             foreach (Item item in tempItemArray)
             {
                 activeLevelItemList.Add(item);
                 Debug.Log("Items from level have been added to ActiveList");
             }
+            activeLevelItemList.Sort();
 
             InvokeRepeating("HighlightItem", StartHighlightAfterSec, RepeatHighlightAfterSec);
         }
