@@ -99,6 +99,14 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
         OnLevelChange(this, args);
     }
 
+    private void InActiveLevel()
+    {
+        LevelChangeEventArgs args = new LevelChangeEventArgs();
+        args.ActiveLevel = gameObject;
+        args.IsActive = false;
+        OnLevelChange(this, args);
+    }
+
     protected virtual void OnTrackingLost()
     {
         InActiveLevel();
@@ -120,13 +128,7 @@ public class DefaultTrackableEventHandler : MonoBehaviour, ITrackableEventHandle
             component.enabled = false;
     }
 
-    private void InActiveLevel()
-    {
-        LevelChangeEventArgs args = new LevelChangeEventArgs();
-        args.ActiveLevel = gameObject;
-        args.IsActive = false;
-        OnLevelChange(this, args);
-    }
+
 
     #endregion // PRIVATE_METHODS
 }
